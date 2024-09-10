@@ -23,7 +23,7 @@ namespace AppServer.Applications.Handles
             if (FindPlayer(player) == null)
             {
                 Players.TryAdd(player.SessionId, player);
-                Console.WriteLine($"List Players {Players.Count}");
+                //Players.AddOrUpdate(player.SessionId, player, (key, oldValue) => player);
             }
         }
 
@@ -40,6 +40,11 @@ namespace AppServer.Applications.Handles
             }
         }
 
+        public bool PlayerExists(string sessionId)
+        {
+            return Players.ContainsKey(sessionId);
+        }
+
         public void RemovePlayer(IPlayer player)
         {
             this.RemovePlayer(player.SessionId);
@@ -47,12 +52,13 @@ namespace AppServer.Applications.Handles
 
         public IPlayer FindPlayer(string id)
         {
-            return Players.FirstOrDefault(p => p.Value.Equals(id)).Value;
+            Players.TryGetValue(id, out var player);
+            return player;
         }
 
         public IPlayer FindPlayer(IPlayer player)
         {
-            return Players.FirstOrDefault(p => p.Value.Equals(player)).Value;
+            return Players.Values.FirstOrDefault(p => p.SessionId == player.SessionId);
         }
 
         public List<IPlayer> GetPlayers()

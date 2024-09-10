@@ -13,6 +13,7 @@ namespace AppServer.Applications.Interfaces
 
         void AddPlayer(IPlayer player);
         void RemovePlayer(string id);
+        bool PlayerExists(string id);
         void RemovePlayer(IPlayer player);
         IPlayer FindPlayer(string id);
         IPlayer FindPlayer(IPlayer player);

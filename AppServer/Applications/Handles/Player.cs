@@ -1,4 +1,6 @@
 ﻿using AppServer.Applications.Interfaces;
+using AppServer.Applications.Messaging;
+using AppServer.Applications.Messaging.Constants;
 using NetCoreServer;
 using System;
 using System.Collections.Generic;
@@ -24,8 +26,10 @@ namespace AppServer.Applications.Handles
         public override void OnWsConnected(HttpRequest request)
         {
             //todo login on player connected
+            var url = request.Url;
             Console.WriteLine("Player Connected");
             IsDisconnected = false;
+            base.OnWsConnected(request);
         }
         public override void OnWsDisconnected()
         {
@@ -37,6 +41,29 @@ namespace AppServer.Applications.Handles
         {
             string message = Encoding.UTF8.GetString(buffer, (int)offset, (int)size);
             Console.WriteLine($"Client {SessionId} send message {message}");
+
+            try
+            {
+                var wsMess = GameHelper.ParseStruct<WsMessage<object>>(message);
+                switch(wsMess.Tags)
+                {
+                    case WsTags.Invalid:
+                        break;
+                    case WsTags.Login:
+                        var loginData = GameHelper.ParseStruct<LoginData>(wsMess.Data.ToString());
+                        var x = 10;
+                        break;
+                    case WsTags.Register:
+                        break;
+                    case WsTags.Lobby:
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
             ((WsGameServer) Server).SendAll($"{this.SessionId} send message {message}");
             //base.OnWsReceived(buffer, offset, size);
         }
@@ -57,11 +84,6 @@ namespace AppServer.Applications.Handles
         {
             //todo logic handle player disconnected
             Console.WriteLine("Player Disconnected");
-        }
-
-        public void SetDisconect(bool value)
-        {
-            throw new NotImplementedException();
         }
 
         public override string ToString()

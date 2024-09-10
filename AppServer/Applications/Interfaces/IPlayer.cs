@@ -11,7 +11,7 @@ namespace AppServer.Applications.Interfaces
         public string SessionId { get; set; }
         public string Name { get; set; }
 
-        void SetDisconect(bool value);
+        void SetDisconnect(bool value);
         bool SendMessage(string message);
         void OnDisconnect();
     }

@@ -8,12 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NetCoreServer" Version="8.0.7" />
+    <Compile Remove="Messaging\**" />
+    <Compile Remove="Room\**" />
+    <EmbeddedResource Remove="Messaging\**" />
+    <EmbeddedResource Remove="Room\**" />
+    <None Remove="Messaging\**" />
+    <None Remove="Room\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Messaging\" />
-    <Folder Include="Room\" />
+    <PackageReference Include="NetCoreServer" Version="8.0.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
 </Project>

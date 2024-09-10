@@ -1,12 +1,14 @@
 ﻿using AppServer.Applications.Interfaces;
 using NetCoreServer;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
 
 namespace AppServer.Applications.Handles
 {
@@ -24,25 +26,41 @@ namespace AppServer.Applications.Handles
         protected override TcpSession CreateSession()
         {
             //todo handle new session
-            Console.WriteLine("New Session Connected");
-            var player =  new Player(this);
+            //Console.WriteLine("New Session Connected");
+            //var player =  new Player(this);
+            //Console.WriteLine($"Session ID player: {player.SessionId}");
+            //Console.WriteLine($" ID player: {player.Id}");
+            //_playerManager.AddPlayer(player);
+            //return base.CreateSession();
+
+            var session = base.CreateSession();
+            var player = new Player(this) { SessionId = session.Id.ToString() };
             _playerManager.AddPlayer(player);
-            return base.CreateSession();
+            Console.WriteLine($"New Session Connected. SessionId: {session.Id}");
+            return player;
         }
 
         protected override void OnDisconnected(TcpSession session)
         {
-            Console.WriteLine($"Session Disconnected");
-            var player = _playerManager.FindPlayer(session.Id.ToString());
-            Console.WriteLine($"{_playerManager.FindPlayer(session.Id.ToString())}");
-            Console.WriteLine($"player: {_playerManager}");
-            Console.WriteLine($"Session ID: {session.Id.ToString()}");
-            Console.WriteLine($"aaaaaaa111111");
-            if (player != null)
+
+            if (_playerManager.PlayerExists(session.Id.ToString()))
             {
-                Console.WriteLine($"aaaaaaa");
-                _playerManager.RemovePlayer(player);
+                _playerManager.RemovePlayer(session.Id.ToString());
+                Console.WriteLine($"Session Disconnected");
             }
+            else
+            {
+                Console.WriteLine($"Warning: Attempted to remove non-existent player with sessionId: {session.Id}");
+            }
+            //var player = _playerManager.FindPlayer(session.Id.ToString());
+            //Console.WriteLine($"{_playerManager.FindPlayer(session.Id.ToString())}");
+            //Console.WriteLine($"player: {_playerManager}");
+            //Console.WriteLine($"Session ID: {session.Id.ToString()}");
+            //if (player != null)
+            //{
+            //    Console.WriteLine($"aaaaaaa");
+            //    _playerManager.RemovePlayer(player);
+            //}
             base.OnDisconnected(session);
         }
 
