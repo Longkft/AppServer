@@ -1,0 +1,12 @@
+2024-09-10 21:43:30.299 +07:00 [INF] >>>>>> Game Server Started
+2024-09-10 21:44:30.897 +07:00 [INF] >>>>>> Game Server Started
+2024-09-10 21:44:36.833 +07:00 [INF] >>>>>> Game Server Restart
+2024-09-10 21:44:51.678 +07:00 [INF] >>>>>> Game Server Started
+2024-09-10 21:44:56.408 +07:00 [INF] >>>>>> Game Server Restart
+2024-09-10 21:45:02.718 +07:00 [INF] >>>>>> Game Server Stop
+2024-09-10 21:55:10.608 +07:00 [ERR] Warning: Attempted to remove non-existent player with sessionId: e054d319-b66a-4d27-9206-e9747fc10a37
+2024-09-10 22:04:45.809 +07:00 [ERR] Warning: Attempted to remove non-existent player with sessionId: 7aa69011-df5c-4452-abff-4c1af2e33b4d
+2024-09-10 22:09:12.195 +07:00 [ERR] Warning: Attempted to remove non-existent player with sessionId: a52f698a-566b-4c52-84f2-864db084bc50
+2024-09-10 22:10:13.284 +07:00 [ERR]  ID player OnDisconnected: 3cb36a3c-6e38-48c1-8189-3cb8707417d2
+2024-09-10 22:10:13.316 +07:00 [ERR] Warning: Attempted to remove non-existent player with sessionId: 3cb36a3c-6e38-48c1-8189-3cb8707417d2
+2024-09-10 22:14:54.933 +07:00 [ERR] Warning: Attempted to remove non-existent player with sessionId: a1f48a02-2c4c-472a-bab1-f42977cf516b

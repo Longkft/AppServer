@@ -1,4 +1,6 @@
 ﻿using AppServer.Applications.Interfaces;
+using AppServer.Logging;
+using GameDatabase.Mongodb.Handlers;
 using NetCoreServer;
 using System;
 using System.Collections.Concurrent;
@@ -6,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Collections.Specialized.BitVector32;
@@ -17,50 +20,51 @@ namespace AppServer.Applications.Handles
         private int _port;
         public readonly IPlayerManager _playerManager;
 
-        public WsGameServer(IPAddress address, int port, IPlayerManager playerManager) : base(address, port)
+        private readonly IGameLogger _logger;
+
+        private readonly MongoDb _mongodb;
+
+        public WsGameServer(IPAddress address, int port, IPlayerManager playerManager, IGameLogger logger, MongoDb mongodb) : base(address, port)
         {
             _port = port;
             _playerManager = playerManager;
+            _logger = logger;
+            _mongodb = mongodb;
         }
 
         protected override TcpSession CreateSession()
         {
             //todo handle new session
-            //Console.WriteLine("New Session Connected");
-            //var player =  new Player(this);
-            //Console.WriteLine($"Session ID player: {player.SessionId}");
-            //Console.WriteLine($" ID player: {player.Id}");
-            //_playerManager.AddPlayer(player);
-            //return base.CreateSession();
-
             var session = base.CreateSession();
-            var player = new Player(this) { SessionId = session.Id.ToString() };
+            _logger.Info("New Session Connected");
+            var player = new Player(this, _mongodb.GetDatabase()) { SessionId = session.Id.ToString() };
+            _logger.Info($"Session ID player: {session.Id}");
+            _logger.Info($" ID player: {player.SessionId}");
             _playerManager.AddPlayer(player);
-            Console.WriteLine($"New Session Connected. SessionId: {session.Id}");
             return player;
         }
 
         protected override void OnDisconnected(TcpSession session)
         {
-
-            if (_playerManager.PlayerExists(session.Id.ToString()))
-            {
-                _playerManager.RemovePlayer(session.Id.ToString());
-                Console.WriteLine($"Session Disconnected");
-            }
-            else
-            {
-                Console.WriteLine($"Warning: Attempted to remove non-existent player with sessionId: {session.Id}");
-            }
-            //var player = _playerManager.FindPlayer(session.Id.ToString());
-            //Console.WriteLine($"{_playerManager.FindPlayer(session.Id.ToString())}");
-            //Console.WriteLine($"player: {_playerManager}");
-            //Console.WriteLine($"Session ID: {session.Id.ToString()}");
-            //if (player != null)
+            _logger.Print($" ID player OnDisconnected: {session.Id}");
+            //if (_playerManager.PlayerExists(session.Id.ToString()))
             //{
-            //    Console.WriteLine($"aaaaaaa");
-            //    _playerManager.RemovePlayer(player);
+            //    _playerManager.RemovePlayer(session.Id.ToString());
+            //    _logger.Info($"Session Disconnected");
             //}
+            //else
+            //{
+            //    _logger.Error($"Warning: Attempted to remove non-existent player with sessionId: {session.Id}");
+            //}
+            var player = _playerManager.FindPlayer(session.Id.ToString());
+            if (player != null)
+            {
+                _logger.Info($"Session player Disconnected");
+                _playerManager.RemovePlayer(player);
+            } else
+            {
+                _logger.Error($"Warning: Attempted to remove non-existent player with sessionId: {session.Id}");
+            }
             base.OnDisconnected(session);
         }
 
@@ -80,14 +84,14 @@ namespace AppServer.Applications.Handles
             //todo logic before start
             if (this.Start())
             {
-                Console.WriteLine($"Server Ws started at {_port}");
+                _logger.Print($"Server Ws started at {_port}");
                 return;
             }
         }
 
         protected override void OnError(SocketError error)
         {
-            Console.WriteLine($"Server Ws error");
+            _logger.Error($"Server Ws error");
             base.OnError(error);
         }
 

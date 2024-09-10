@@ -1,0 +1,13 @@
+E:\C#\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.csproj.AssemblyReference.cache
+E:\C#\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.GeneratedMSBuildEditorConfig.editorconfig
+E:\C#\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.AssemblyInfoInputs.cache
+E:\C#\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.AssemblyInfo.cs
+E:\C#\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.csproj.CoreCompileInputs.cache
+E:\C#\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.sourcelink.json
+E:\C#\AppServer\GameDatabase\bin\Debug\net8.0\GameDatabase.deps.json
+E:\C#\AppServer\GameDatabase\bin\Debug\net8.0\GameDatabase.dll
+E:\C#\AppServer\GameDatabase\bin\Debug\net8.0\GameDatabase.pdb
+E:\C#\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.dll
+E:\C#\AppServer\GameDatabase\obj\Debug\net8.0\refint\GameDatabase.dll
+E:\C#\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.pdb
+E:\C#\AppServer\GameDatabase\obj\Debug\net8.0\ref\GameDatabase.dll

@@ -1,6 +1,11 @@
 ﻿using AppServer.Applications.Interfaces;
 using AppServer.Applications.Messaging;
 using AppServer.Applications.Messaging.Constants;
+using AppServer.GameModels;
+using AppServer.Logging;
+using GameDatabase.Mongodb.Handlers;
+using GameDatabase.Mongodb.Interfaces;
+using MongoDB.Driver;
 using NetCoreServer;
 using System;
 using System.Collections.Generic;
@@ -17,17 +22,23 @@ namespace AppServer.Applications.Handles
 
         private bool IsDisconnected { get; set; }
 
-        public Player(WsServer server) : base(server) 
+        private readonly IGameLogger _logger;
+
+        private IGameDB<User> UsersDb { get; set; }
+
+        public Player(WsServer server, IMongoDatabase database) : base(server) 
         {
             SessionId = this.Id.ToString();
             IsDisconnected = false;
+            _logger = new GameLogger();
+            UsersDb = new MongoHandler<User>(database);
         }
 
         public override void OnWsConnected(HttpRequest request)
         {
             //todo login on player connected
             var url = request.Url;
-            Console.WriteLine("Player Connected");
+            _logger.Info("Player Connected");
             IsDisconnected = false;
             base.OnWsConnected(request);
         }
@@ -40,7 +51,7 @@ namespace AppServer.Applications.Handles
         public override void OnWsReceived(byte[] buffer, long offset, long size)
         {
             string message = Encoding.UTF8.GetString(buffer, (int)offset, (int)size);
-            Console.WriteLine($"Client {SessionId} send message {message}");
+            _logger.Print($"Client {SessionId} send message {message}");
 
             try
             {
@@ -51,7 +62,9 @@ namespace AppServer.Applications.Handles
                         break;
                     case WsTags.Login:
                         var loginData = GameHelper.ParseStruct<LoginData>(wsMess.Data.ToString());
-                        var x = 10;
+                        var user = new User("volong", "123456", "Admin");
+                        var newUser = UsersDb.Create(user);
+                        _logger.Info(newUser.Username);
                         break;
                     case WsTags.Register:
                         break;
@@ -61,10 +74,10 @@ namespace AppServer.Applications.Handles
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.Error("OnWsReceived error", e);
             }
 
-            ((WsGameServer) Server).SendAll($"{this.SessionId} send message {message}");
+            //((WsGameServer) Server).SendAll($"{this.SessionId} send message {message}");
             //base.OnWsReceived(buffer, offset, size);
         }
 
@@ -83,7 +96,7 @@ namespace AppServer.Applications.Handles
         public void OnDisconnect()
         {
             //todo logic handle player disconnected
-            Console.WriteLine("Player Disconnected");
+            _logger.Info("Player Disconnected");
         }
 
         public override string ToString()

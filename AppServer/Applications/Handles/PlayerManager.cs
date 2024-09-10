@@ -1,4 +1,5 @@
 ﻿using AppServer.Applications.Interfaces;
+using AppServer.Logging;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -13,8 +14,11 @@ namespace AppServer.Applications.Handles
     { 
         public ConcurrentDictionary<string, IPlayer> Players {  get; set; }
 
-        public PlayerManager()
+        private readonly IGameLogger _logger;
+
+        public PlayerManager(IGameLogger logger)
         {
+            _logger = logger;
             Players = new ConcurrentDictionary<string, IPlayer>();
         }
 
@@ -24,6 +28,7 @@ namespace AppServer.Applications.Handles
             {
                 Players.TryAdd(player.SessionId, player);
                 //Players.AddOrUpdate(player.SessionId, player, (key, oldValue) => player);
+                _logger.Info($"List Player {Players.Count}");
             }
         }
 
@@ -34,8 +39,8 @@ namespace AppServer.Applications.Handles
                 Players.TryRemove(id, out var player);
                 if (player != null)
                 {
-                    Console.WriteLine($"Remove {id} success");
-                    Console.WriteLine($"List Player {Players.Count}");
+                    _logger.Info($"Remove {id} success");
+                    _logger.Info($"List Player {Players.Count}");
                 }
             }
         }
