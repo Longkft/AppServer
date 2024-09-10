@@ -1,0 +1,17 @@
+E:\C#\AppServer\AppServer\bin\Debug\net8.0\AppServer.exe
+E:\C#\AppServer\AppServer\bin\Debug\net8.0\AppServer.deps.json
+E:\C#\AppServer\AppServer\bin\Debug\net8.0\AppServer.runtimeconfig.json
+E:\C#\AppServer\AppServer\bin\Debug\net8.0\AppServer.dll
+E:\C#\AppServer\AppServer\bin\Debug\net8.0\AppServer.pdb
+E:\C#\AppServer\AppServer\obj\Debug\net8.0\AppServer.GeneratedMSBuildEditorConfig.editorconfig
+E:\C#\AppServer\AppServer\obj\Debug\net8.0\AppServer.AssemblyInfoInputs.cache
+E:\C#\AppServer\AppServer\obj\Debug\net8.0\AppServer.AssemblyInfo.cs
+E:\C#\AppServer\AppServer\obj\Debug\net8.0\AppServer.csproj.CoreCompileInputs.cache
+E:\C#\AppServer\AppServer\obj\Debug\net8.0\AppServer.dll
+E:\C#\AppServer\AppServer\obj\Debug\net8.0\refint\AppServer.dll
+E:\C#\AppServer\AppServer\obj\Debug\net8.0\AppServer.pdb
+E:\C#\AppServer\AppServer\obj\Debug\net8.0\AppServer.genruntimeconfig.cache
+E:\C#\AppServer\AppServer\obj\Debug\net8.0\ref\AppServer.dll
+E:\C#\AppServer\AppServer\obj\Debug\net8.0\AppServer.csproj.AssemblyReference.cache
+E:\C#\AppServer\AppServer\bin\Debug\net8.0\NetCoreServer.dll
+E:\C#\AppServer\AppServer\obj\Debug\net8.0\AppServer.csproj.Up2Date

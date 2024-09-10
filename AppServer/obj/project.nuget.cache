@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "TMnulqAL7qA=",
+  "success": true,
+  "projectFilePath": "E:\\C#\\AppServer\\AppServer\\AppServer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\admin\\.nuget\\packages\\netcoreserver\\8.0.7\\netcoreserver.8.0.7.nupkg.sha512"
+  ],
+  "logs": []
+}
