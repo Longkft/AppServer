@@ -37,7 +37,7 @@ namespace AppServer.Applications.Handles
             //todo handle new session
             var session = base.CreateSession();
             _logger.Info("New Session Connected");
-            var player = new Player(this, _mongodb.GetDatabase()) { SessionId = session.Id.ToString() };
+            var player = new Player(this, _mongodb.GetDatabase());
             _logger.Info($"Session ID player: {session.Id}");
             _logger.Info($" ID player: {player.SessionId}");
             _playerManager.AddPlayer(player);

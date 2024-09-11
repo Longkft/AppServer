@@ -1,4 +1,6 @@
-﻿using AppServer.GameModels.Base;
+﻿using AppServer.Applications.Handles;
+using AppServer.GameModels.Base;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +20,9 @@ namespace AppServer.GameModels
 
         public User(string username, string password, string displayname)
         {
+            Id = Guid.NewGuid().ToString();
             Username = username;
-            Password = password;
+            Password = GameHelper.HashPassword(password);
             DisplayName = displayname;
             Avata = "";
             Level = 1;

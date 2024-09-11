@@ -57,8 +57,7 @@ namespace AppServer.Applications.Handles
 
         public IPlayer FindPlayer(string id)
         {
-            Players.TryGetValue(id, out var player);
-            return player;
+            return Players.FirstOrDefault(p => p.Value.SessionId == id).Value;
         }
 
         public IPlayer FindPlayer(IPlayer player)

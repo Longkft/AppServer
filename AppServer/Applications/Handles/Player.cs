@@ -2,6 +2,7 @@
 using AppServer.Applications.Messaging;
 using AppServer.Applications.Messaging.Constants;
 using AppServer.GameModels;
+using AppServer.GameModels.Handlers;
 using AppServer.Logging;
 using GameDatabase.Mongodb.Handlers;
 using GameDatabase.Mongodb.Interfaces;
@@ -23,15 +24,17 @@ namespace AppServer.Applications.Handles
         private bool IsDisconnected { get; set; }
 
         private readonly IGameLogger _logger;
+        private UserHandler UsersDb { get; set; }
+        private User UserInfo { get; set; }
 
-        private IGameDB<User> UsersDb { get; set; }
+        //private IGameDB<User> UsersDb { get; set; }
 
         public Player(WsServer server, IMongoDatabase database) : base(server) 
         {
             SessionId = this.Id.ToString();
             IsDisconnected = false;
             _logger = new GameLogger();
-            UsersDb = new MongoHandler<User>(database);
+            UsersDb = new UserHandler(database);
         }
 
         public override void OnWsConnected(HttpRequest request)
@@ -62,11 +65,39 @@ namespace AppServer.Applications.Handles
                         break;
                     case WsTags.Login:
                         var loginData = GameHelper.ParseStruct<LoginData>(wsMess.Data.ToString());
-                        var user = new User("volong", "123456", "Admin");
-                        var newUser = UsersDb.Create(user);
-                        _logger.Info(newUser.Username);
+                        UserInfo = UsersDb.FindByUserName(loginData.Username);
+                        if (UserInfo != null)
+                        {
+                            var hashPass = GameHelper.HashPassword(loginData.Password);
+                            if(hashPass == UserInfo.Password)
+                            {
+                                //todo in lobby
+                                this.PlayerJoinLobby();
+                                return;
+                            }    
+                        }
+                        var invalidMess = new WsMessage<string>(WsTags.Invalid, "Username or Password is Invalid");
+                        this.SendMessage(GameHelper.ParseString(invalidMess));
+                        //var user = new User("volong", "123456", "Admin");
+                        //var newUser = UsersDb.Create(user);
+                        //_logger.Info(newUser.Username);
                         break;
                     case WsTags.Register:
+                        var regData = GameHelper.ParseStruct<RegisterData>(wsMess.Data.ToString());
+                        var check = UsersDb.FindByUserName(regData.Username);
+                        if (check != null)
+                        {
+                            invalidMess = new WsMessage<string>(WsTags.Invalid, "Username exits");
+                            this.SendMessage(GameHelper.ParseString(invalidMess));
+                            return;
+                        }
+                        var newUser = new User(regData.Username, regData.Password, regData.DisplayName);
+                        UserInfo = UsersDb.Create(newUser);
+                        if (UserInfo != null)
+                        {
+                            //todo in lobby
+                            this.PlayerJoinLobby();
+                        }
                         break;
                     case WsTags.Lobby:
                         break;
@@ -79,6 +110,11 @@ namespace AppServer.Applications.Handles
 
             //((WsGameServer) Server).SendAll($"{this.SessionId} send message {message}");
             //base.OnWsReceived(buffer, offset, size);
+        }
+
+        private void PlayerJoinLobby()
+        {
+
         }
 
         private bool _isConnected;

@@ -10,10 +10,11 @@ namespace GameDatabase.Mongodb.Interfaces
     public interface IGameDB<T> where T : class
     {
         IMongoDatabase GetDatabase();
-        T Get(string id);
+        IMongoCollection<T> GetCollection(string name);
+        T Get(FilterDefinition<T> filter);
         List<T> GetAll();
         T Create(T item);
-        bool Remove(string id);
-        T UpDate(string id, T item);
+        void Remove(FilterDefinition<T> filter);
+        T Update(FilterDefinition<T> filter, UpdateDefinition<T> updater);
     }
 }

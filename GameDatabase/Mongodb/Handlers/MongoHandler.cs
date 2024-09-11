@@ -10,29 +10,24 @@ namespace GameDatabase.Mongodb.Handlers
 {
     public class MongoHandler<T> : IGameDB<T> where T : class
     {
-        private IMongoDatabase _database;
-        private IMongoCollection<T> _collection;
+        private readonly IMongoDatabase _database;
+        private IMongoCollection<T> Collection { get; set; }
         public MongoHandler(IMongoDatabase database)
         {
             _database = database;
-            _collection = _database.GetCollection<T>("Users");
+            this.SetCollection();
         }
 
-        public T Create(T item)
+        private void SetCollection()
         {
-            _collection.InsertOne(item);
-            return item;
-        }
-
-        public T Get(string id)
-        {
-            //_collection.Find<User>(it => it.Id == id).FirstOrDefault();
-            return default(T);
-        }
-
-        public List<T> GetAll()
-        {
-            throw new NotImplementedException();
+            switch (typeof(T).Name)
+            {
+                case "User":
+                    Collection = _database.GetCollection<T>("Users");
+                    break;
+                case "Room":
+                    break;
+            }
         }
 
         public IMongoDatabase GetDatabase()
@@ -40,14 +35,37 @@ namespace GameDatabase.Mongodb.Handlers
             return _database;
         }
 
-        public bool Remove(string id)
+        public IMongoCollection<T> GetCollection(string colName)
         {
-            throw new NotImplementedException();
+            return _database.GetCollection<T>(colName);
         }
 
-        public T UpDate(string id, T item)
+        public T Get(FilterDefinition<T> filter)
         {
-            throw new NotImplementedException();
+            return Collection.Find(filter).FirstOrDefault();
+        }
+
+        public List<T> GetAll()
+        {
+            var filter = Builders<T>.Filter.Empty;
+            return Collection.Find(filter).ToList();
+        }
+
+        public T Create(T item)
+        {
+            Collection.InsertOne(item);
+            return item;
+        }
+
+        public void Remove(FilterDefinition<T> filter)
+        {
+            Collection.DeleteOne(filter);
+        }
+
+        public T Update(FilterDefinition<T> filter, UpdateDefinition<T> updater)
+        {
+            Collection.UpdateOne(filter, updater);
+            return Get(filter);
         }
     }
 }

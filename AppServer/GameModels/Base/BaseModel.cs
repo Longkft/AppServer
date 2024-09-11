@@ -11,10 +11,8 @@ namespace AppServer.GameModels.Base
     {
         [BsonId]
         public string Id { get; set; }
-
         public DateTime CreateAt { get; set; }
         public DateTime UpdateAt { get; set; }
-
         public BaseModel() 
         {
             CreateAt = DateTime.Now;

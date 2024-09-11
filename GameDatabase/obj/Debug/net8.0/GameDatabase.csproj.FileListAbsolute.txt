@@ -11,3 +11,16 @@ E:\C#\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.dll
 E:\C#\AppServer\GameDatabase\obj\Debug\net8.0\refint\GameDatabase.dll
 E:\C#\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.pdb
 E:\C#\AppServer\GameDatabase\obj\Debug\net8.0\ref\GameDatabase.dll
+D:\cocos\tailieu\DoAn\AppServer\GameDatabase\bin\Debug\net8.0\GameDatabase.deps.json
+D:\cocos\tailieu\DoAn\AppServer\GameDatabase\bin\Debug\net8.0\GameDatabase.dll
+D:\cocos\tailieu\DoAn\AppServer\GameDatabase\bin\Debug\net8.0\GameDatabase.pdb
+D:\cocos\tailieu\DoAn\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.csproj.AssemblyReference.cache
+D:\cocos\tailieu\DoAn\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.GeneratedMSBuildEditorConfig.editorconfig
+D:\cocos\tailieu\DoAn\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.AssemblyInfoInputs.cache
+D:\cocos\tailieu\DoAn\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.AssemblyInfo.cs
+D:\cocos\tailieu\DoAn\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.csproj.CoreCompileInputs.cache
+D:\cocos\tailieu\DoAn\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.sourcelink.json
+D:\cocos\tailieu\DoAn\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.dll
+D:\cocos\tailieu\DoAn\AppServer\GameDatabase\obj\Debug\net8.0\refint\GameDatabase.dll
+D:\cocos\tailieu\DoAn\AppServer\GameDatabase\obj\Debug\net8.0\GameDatabase.pdb
+D:\cocos\tailieu\DoAn\AppServer\GameDatabase\obj\Debug\net8.0\ref\GameDatabase.dll
