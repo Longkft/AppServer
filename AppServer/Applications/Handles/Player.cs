@@ -27,8 +27,6 @@ namespace AppServer.Applications.Handles
         private UserHandler UsersDb { get; set; }
         private User UserInfo { get; set; }
 
-        //private IGameDB<User> UsersDb { get; set; }
-
         public Player(WsServer server, IMongoDatabase database) : base(server) 
         {
             SessionId = this.Id.ToString();
@@ -47,7 +45,7 @@ namespace AppServer.Applications.Handles
         }
         public override void OnWsDisconnected()
         {
-            OnDisconnected();
+            OnDisconnect();
             base.OnWsDisconnected();
         }
 
@@ -72,6 +70,8 @@ namespace AppServer.Applications.Handles
                             if(hashPass == UserInfo.Password)
                             {
                                 //todo in lobby
+                                var messInfo = new WsMessage<UserInfo>(WsTags.UserInfo, this.GetUserInfo());
+                                this.SendMessage(messInfo);
                                 this.PlayerJoinLobby();
                                 return;
                             }    
@@ -84,6 +84,12 @@ namespace AppServer.Applications.Handles
                         break;
                     case WsTags.Register:
                         var regData = GameHelper.ParseStruct<RegisterData>(wsMess.Data.ToString());
+                        if (UserInfo != null)
+                        {
+                            invalidMess = new WsMessage<string>(WsTags.Invalid, "You are Logined");
+                            this.SendMessage(GameHelper.ParseString(invalidMess));
+                            return;
+                        }
                         var check = UsersDb.FindByUserName(regData.Username);
                         if (check != null)
                         {
@@ -99,7 +105,7 @@ namespace AppServer.Applications.Handles
                             this.PlayerJoinLobby();
                         }
                         break;
-                    case WsTags.Lobby:
+                    case WsTags.RoomInfo:
                         break;
                 }
             }
@@ -114,7 +120,8 @@ namespace AppServer.Applications.Handles
 
         private void PlayerJoinLobby()
         {
-
+            var lobby = ((WsGameServer)Server).RoomManager.Lobby;
+            lobby.JoinRoom(this);
         }
 
         private bool _isConnected;
@@ -132,12 +139,35 @@ namespace AppServer.Applications.Handles
         public void OnDisconnect()
         {
             //todo logic handle player disconnected
+            var lobby = ((WsGameServer)Server).RoomManager.Lobby;
+            lobby.ExitRoom(this);
             _logger.Info("Player Disconnected");
         }
 
         public override string ToString()
         {
             return $"Player(Id: {Id})";
+        }
+
+        public UserInfo GetUserInfo()
+        {
+            if (UserInfo != null)
+            {
+                return new UserInfo
+                {
+                    DisplayName = UserInfo.DisplayName,
+                    Amout = UserInfo.Amout,
+                    Avata = UserInfo.Avata,
+                    Level = UserInfo.Level
+                };
+            }
+            return new UserInfo();
+        }
+
+        public bool SendMessage<T>(WsMessage<T> message)
+        {
+            var mes = GameHelper.ParseString(message);
+            return this.SendMessage(mes);
         }
     }
 }

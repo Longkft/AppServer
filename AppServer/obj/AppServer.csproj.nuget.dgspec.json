@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\cocos\\tailieu\\DoAn\\AppServer\\AppServer\\AppServer.csproj": {}
+    "E:\\C#\\AppServer\\AppServer\\AppServer.csproj": {}
   },
   "projects": {
-    "D:\\cocos\\tailieu\\DoAn\\AppServer\\AppServer\\AppServer.csproj": {
+    "E:\\C#\\AppServer\\AppServer\\AppServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\cocos\\tailieu\\DoAn\\AppServer\\AppServer\\AppServer.csproj",
+        "projectUniqueName": "E:\\C#\\AppServer\\AppServer\\AppServer.csproj",
         "projectName": "AppServer",
-        "projectPath": "D:\\cocos\\tailieu\\DoAn\\AppServer\\AppServer\\AppServer.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\cocos\\tailieu\\DoAn\\AppServer\\AppServer\\obj\\",
+        "projectPath": "E:\\C#\\AppServer\\AppServer\\AppServer.csproj",
+        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+        "outputPath": "E:\\C#\\AppServer\\AppServer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,8 +29,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\cocos\\tailieu\\DoAn\\AppServer\\GameDatabase\\GameDatabase.csproj": {
-                "projectPath": "D:\\cocos\\tailieu\\DoAn\\AppServer\\GameDatabase\\GameDatabase.csproj"
+              "E:\\C#\\AppServer\\GameDatabase\\GameDatabase.csproj": {
+                "projectPath": "E:\\C#\\AppServer\\GameDatabase\\GameDatabase.csproj"
               }
             }
           }
@@ -43,8 +43,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "direct"
-        }
+          "auditMode": "all"
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -99,21 +100,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100-preview.7.24407.12/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\cocos\\tailieu\\DoAn\\AppServer\\GameDatabase\\GameDatabase.csproj": {
+    "E:\\C#\\AppServer\\GameDatabase\\GameDatabase.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\cocos\\tailieu\\DoAn\\AppServer\\GameDatabase\\GameDatabase.csproj",
+        "projectUniqueName": "E:\\C#\\AppServer\\GameDatabase\\GameDatabase.csproj",
         "projectName": "GameDatabase",
-        "projectPath": "D:\\cocos\\tailieu\\DoAn\\AppServer\\GameDatabase\\GameDatabase.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\cocos\\tailieu\\DoAn\\AppServer\\GameDatabase\\obj\\",
+        "projectPath": "E:\\C#\\AppServer\\GameDatabase\\GameDatabase.csproj",
+        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+        "outputPath": "E:\\C#\\AppServer\\GameDatabase\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -138,8 +139,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "direct"
-        }
+          "auditMode": "all"
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -170,7 +172,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100-preview.7.24407.12/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

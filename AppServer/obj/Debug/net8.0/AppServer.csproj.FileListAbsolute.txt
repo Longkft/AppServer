@@ -88,3 +88,5 @@ D:\cocos\tailieu\DoAn\AppServer\AppServer\bin\Debug\net8.0\GameDatabase.dll
 D:\cocos\tailieu\DoAn\AppServer\AppServer\bin\Debug\net8.0\GameDatabase.pdb
 D:\cocos\tailieu\DoAn\AppServer\AppServer\bin\Debug\net8.0\Microsoft.Practices.ServiceLocation.dll
 D:\cocos\tailieu\DoAn\AppServer\AppServer\bin\Debug\net8.0\XAct.Core.PCL.dll
+E:\C#\AppServer\AppServer\bin\Debug\net8.0\Microsoft.Practices.ServiceLocation.dll
+E:\C#\AppServer\AppServer\bin\Debug\net8.0\XAct.Core.PCL.dll

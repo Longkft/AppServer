@@ -11,6 +11,9 @@ namespace AppServer.Applications.Messaging
         Invalid,
         Login,
         Register,
-        Lobby
+        UserInfo,
+        RoomInfo,
+        Run,
+        Stop
     }
 }
