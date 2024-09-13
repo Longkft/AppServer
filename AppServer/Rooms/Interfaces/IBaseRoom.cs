@@ -1,5 +1,6 @@
 ﻿using AppServer.Applications.Interfaces;
 using AppServer.Applications.Messaging;
+using AppServer.Rooms.Constants;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace AppServer.Rooms.Interfaces
     public interface IBaseRoom
     {
         public string Id { get; set; }
+        public RoomType RoomType { get; set; }
         public ConcurrentDictionary<string, IPlayer> Players { get; }
         bool JoinRoom(IPlayer player);
         bool ExitRoom(IPlayer player);

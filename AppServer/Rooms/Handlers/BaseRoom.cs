@@ -2,6 +2,7 @@
 using AppServer.Applications.Interfaces;
 using AppServer.Applications.Messaging;
 using AppServer.Applications.Messaging.Constants;
+using AppServer.Rooms.Constants;
 using AppServer.Rooms.Interfaces;
 using System;
 using System.Collections.Concurrent;
@@ -17,20 +18,23 @@ namespace AppServer.Rooms.Handlers
         public string Id { get ; set ; }
 
         public ConcurrentDictionary<string, IPlayer> Players {  get; set ; }
-        public BaseRoom() 
+        public RoomType RoomType { get ; set ; }
+
+        public BaseRoom(RoomType type) 
         {
+            RoomType = type ;
             Id = GameHelper.RandomString(10);
             Players = new ConcurrentDictionary<string, IPlayer>();
         }
 
         
 
-        public IPlayer FindPlayer(string id)
+        public virtual IPlayer FindPlayer(string id)
         {
             return Players.FirstOrDefault(p => p.Key.Equals(id)).Value;
         }
 
-        public bool JoinRoom(IPlayer player)
+        public virtual bool JoinRoom(IPlayer player)
         {
             if (FindPlayer(player.SessionId) == null)
             {
@@ -45,11 +49,12 @@ namespace AppServer.Rooms.Handlers
 
         private void RoomInfo()
         {
-            var lobby = new LobbyInfo
+            var lobby = new RoomInfo
             {
+                RoomType=RoomType,
                 Players = Players.Values.Select(p => p.GetUserInfo()).ToList()
             };
-            var mess = new WsMessage<LobbyInfo>(WsTags.RoomInfo, lobby);
+            var mess = new WsMessage<RoomInfo>(WsTags.RoomInfo, lobby);
             this.SendMessage(mess);
         }
 
@@ -86,12 +91,12 @@ namespace AppServer.Rooms.Handlers
             }
         }
 
-        public bool ExitRoom(IPlayer player)
+        public virtual bool ExitRoom(IPlayer player)
         {
             return this.ExitRoom(player.SessionId);
         }
 
-        public bool ExitRoom(string id)
+        public virtual bool ExitRoom(string id)
         {
             var player = FindPlayer(id);
             if (player != null)

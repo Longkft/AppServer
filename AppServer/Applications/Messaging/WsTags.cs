@@ -13,7 +13,8 @@ namespace AppServer.Applications.Messaging
         Register,
         UserInfo,
         RoomInfo,
-        Run,
-        Stop
+        LobbyInfo,
+        CreateRoom,
+        Play
     }
 }

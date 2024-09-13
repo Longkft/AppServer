@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace AppServer.Applications.Messaging.Constants
 {
-    public struct LobbyInfo
+    public struct CreateRoomData
     {
-        public List<UserInfo> Players {  get; set; }
-
+        public int Time {  get; set; }
     }
 }

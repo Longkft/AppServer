@@ -1,4 +1,5 @@
-﻿using AppServer.Rooms.Interfaces;
+﻿using AppServer.Rooms.Constants;
+using AppServer.Rooms.Interfaces;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -10,12 +11,12 @@ namespace AppServer.Rooms.Handlers
 {
     public class RoomManager : IRoomManager
     {
-        public BaseRoom Lobby { get; set; }
+        public Lobby Lobby { get; set; }
         private ConcurrentDictionary<string, BaseRoom> Rooms { get; set; }
         public RoomManager()
         {
             Rooms = new ConcurrentDictionary<string, BaseRoom>();
-            Lobby = new BaseRoom();
+            Lobby = new Lobby(RoomType.Lobby);
         }
 
         public BaseRoom FindRoom(string id)
@@ -34,9 +35,9 @@ namespace AppServer.Rooms.Handlers
             return false;
         }
 
-        public BaseRoom CreateRoom()
+        public BaseRoom CreateRoom(int timer = 180)
         {
-            var newRoom = new BaseRoom();
+            var newRoom = new PuzzleRoom(timer);
             Rooms.TryAdd(newRoom.Id, newRoom);
             return newRoom;
         }

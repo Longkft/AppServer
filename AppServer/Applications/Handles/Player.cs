@@ -57,7 +57,7 @@ namespace AppServer.Applications.Handles
             try
             {
                 var wsMess = GameHelper.ParseStruct<WsMessage<object>>(message);
-                switch(wsMess.Tags)
+                switch (wsMess.Tags)
                 {
                     case WsTags.Invalid:
                         break;
@@ -67,14 +67,14 @@ namespace AppServer.Applications.Handles
                         if (UserInfo != null)
                         {
                             var hashPass = GameHelper.HashPassword(loginData.Password);
-                            if(hashPass == UserInfo.Password)
+                            if (hashPass == UserInfo.Password)
                             {
                                 //todo in lobby
                                 var messInfo = new WsMessage<UserInfo>(WsTags.UserInfo, this.GetUserInfo());
                                 this.SendMessage(messInfo);
                                 this.PlayerJoinLobby();
                                 return;
-                            }    
+                            }
                         }
                         var invalidMess = new WsMessage<string>(WsTags.Invalid, "Username or Password is Invalid");
                         this.SendMessage(GameHelper.ParseString(invalidMess));
@@ -107,6 +107,14 @@ namespace AppServer.Applications.Handles
                         break;
                     case WsTags.RoomInfo:
                         break;
+                    case WsTags.UserInfo:
+                        break;
+                    case WsTags.CreateRoom:
+                        var createRoom = GameHelper.ParseStruct<CreateRoomData>(wsMess.Data.ToString());
+                        this.OnUSerCreateRoom(createRoom);
+                        break;
+                    case WsTags.Play:
+                        break;
                 }
             }
             catch (Exception e)
@@ -116,6 +124,16 @@ namespace AppServer.Applications.Handles
 
             //((WsGameServer) Server).SendAll($"{this.SessionId} send message {message}");
             //base.OnWsReceived(buffer, offset, size);
+        }
+
+        private void OnUSerCreateRoom(CreateRoomData data)
+        {
+            var room = ((WsGameServer)Server).RoomManager.CreateRoom(data.Time);
+            if (room != null && room.JoinRoom(this))
+            {
+                var lobby = ((WsGameServer)Server).RoomManager.Lobby;
+                lobby.ExitRoom(this);
+            }
         }
 
         private void PlayerJoinLobby()
