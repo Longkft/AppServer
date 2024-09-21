@@ -19,27 +19,35 @@ namespace AppServer.GameModels.Handlers
         }
         public RoomModel Create(RoomModel item)
         {
-            throw new NotImplementedException();
+            var room = _roomDb.Create(item);
+            return room;
         }
 
         public RoomModel Find(string id)
         {
-            throw new NotImplementedException();
+            var filter = Builders<RoomModel>.Filter.Eq(i => i.RoomId, id);
+            return _roomDb.Get(filter);
         }
 
         public List<RoomModel> FindAll()
         {
-            throw new NotImplementedException();
+            return _roomDb.GetAll();
         }
 
         public void Remove(string id)
         {
-            throw new NotImplementedException();
+            var filter = Builders<RoomModel>.Filter.Eq(i => i.Id, id);
+            _roomDb.Remove(filter);
         }
 
         public RoomModel Update(string id, RoomModel item)
         {
-            throw new NotImplementedException();
+            var filter = Builders<RoomModel>.Filter.Eq(i => i.Id, id);
+            var updater = Builders<RoomModel>.Update
+                .Set(i => i.CountPlayer, item.CountPlayer)
+                .Set(i => i.UpdateAt, DateTime.Now);
+            _roomDb.Update(filter, updater);
+            return item;
         }
     }
 }
